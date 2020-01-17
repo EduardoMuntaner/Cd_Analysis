@@ -38,5 +38,3 @@ def q(h, M):
     return rho*M*v_s**2/2
 
 
-
-# last test`
