@@ -1,6 +1,6 @@
-#python script for calculating drag coeff of a rocket, at height h and Mach 
-# number M. Zero-lift is assumed. atmospheric pkg used is only correct to 
-# 86 km, approximate thereafter.
+#python script for calculating drag and lift coeff's of a rocket, at height h
+# and Mach number M. Zero-lift is not assumed. atmospheric pkg used is only 
+# correct to 86 km, approximate thereafter.
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,8 +8,12 @@ import pkg
 
 # Rocket Measurements (length, aspect ratio, etc.)
 global LBod = 1 # length of the body (m)
+global DBod = 1 # max body diameter (m)
 global LNos = 1 # length of the nose (m)
-global D = 1 # reference diameter (m)
+global DNos = 1 # max diameter of nose (m)
+global LBas = 1 # length of base (m)
+global DBas = 1 # max diameter of base (m)
+
 global AR_B = LBod/D # Aspect ratio of the body
 global AR_N = LNos/D # Aspect ratio of the nose
 global S_r = np.pi*(D/2)**2 # reference area using reference diameter (m^2)
@@ -17,15 +21,13 @@ global A_e = 0.1 # Area of exhaust
 
 
 # flight parameters (height values, Mach values, etc)
-global coast = false
 global max_h = 100000 # max height (m)
 global N = 10 # number of heights at which to calculate Cd
 global height = np.linspace(0, max_h, N) # array of heights
 global NM = 100 # number of points for Mach Nums
-global M_min = 1 # min Mach Num
+global M_min = 0.4 # min Mach Num
 global M_max = 6 # max Mach Num
 global Mach_Num = np.linspace(M_min, M_max, NM) # array of Mach Nums
-
 
 
 # Because of complicated aerodynamics, the calculation must be split by body 
@@ -74,7 +76,7 @@ def Cd_base(coast, M, A_e, S_r):
 #M: Mach number of the rocket                      #
 #~~~~~~~~~~~~~~~~~~~~OUTPUTS~~~~~~~~~~~~~~~~~~~~~  #
 #Cd for the body                                   # 
-def Cd_body(AR_B, M, LBod, h):
+def Cd_body(LTot, LBod, LNos, DBod, DBas, LBas,):
     return 0.053*(AR_B)*(M/(q(h,M)*l))**(0.2)
 
 

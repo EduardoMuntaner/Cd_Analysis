@@ -4,7 +4,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import pkg
+import 
 
 # Rocket Measurements (length, aspect ratio, etc.)
 global LBod = 1 # length of the body (m)
